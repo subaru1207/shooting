@@ -1,49 +1,75 @@
-document.getElementById("txt").innerText="これはゲームです";
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-gameLoop();
+const player ={
+    x: canvas.width /2 -15,
+    y: canvas.height - 60,
+    width: 30,
+    height:30,
+    color: "blue",
 
-// Removed duplicate declarations of canvas and ctx
-// const canvas = document.getElementById("canvas");
-// const ctx = canvas.getContext("2d");
+   
+};
 
-let x = 225;
-let tama = 0;
+const bullets = [];
+const BULLET_SPEED = -7;
+
+function tryShoot(){
+   bullets.push({
+    x: player.x,
+    y: player.y,
+    width: 9,
+    height:9,
+    vy: BULLET_SPEED, 
+   })
+
+} 
 
 window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
-        x -= 10;
+        if (player.x > 10){
+            player.x -= 10;
+        }
     } else if (e.key === "ArrowRight") {
-        x += 10;
+        if(player.x< canvas.width - player.width -10){
+            player.x += 10;
+        }
     } else if (e.code === "Space") {
-        tama += 1;
+        tryShoot();
     }
 });
 
-let y1 = 0;
-let y2 = 0;
-
-function gameLoop() {
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "red";
-    ctx.fillRect(150, y1, 30, 30);
-    y1 += 5;
-
-    ctx.fillStyle = "red";
-    ctx.fillRect(300, y2, 30, 30);
-    y2 += 5;
-
-    ctx.fillStyle = "yellow";
-    ctx.fillRect(x, 480, 30, 30);
-
-    if (tama > 0) {
-        ctx.fillStyle = "white";
-        ctx.fillRect(x + 10, 480 - tama * 10, 10, 10);
+function update(){
+    for(let i= 0; i<bullets.length; i++){
+        const bullet = bullets[i];
+        bullet.y += bullet.vy;
+        if (bullet.y < 0){
+            bullets.splice(i,1);
+        
+        }
     }
 
+}
+
+function draw(){
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+ctx.fillStyle = player.color;
+ctx.fillRect(player.x,player.y, player.width, player.height); 
+
+ctx.fillStyle = "white";
+for (let i = 0; i < bullets.length; i++) {
+    const bullet = bullets[i];
+    ctx.fillRect(bullet.x,bullet.y,bullet.width,bullet.height);
+}
+}
+
+function gameLoop() {
+   
+    update();
+    draw();
     requestAnimationFrame(gameLoop);
 }
 
