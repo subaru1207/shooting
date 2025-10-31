@@ -1,6 +1,6 @@
 /* ゲーム用canvasを中央に表示し、背景色を設定 */
 body {
-  background: #272525;
+  background: hwb(0 0% 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,8 +9,8 @@ body {
 }
 
 #gameCanvas {
-  background: #e0dbdb;
-  border: 2px solid #ffa1eb;
+  background: #e0dbdb00;
+  border: 2px solid #ff000d;
   box-shadow: 0 4px 24px rgba(8, 252, 0, 0.007);
   display: block;
 }
