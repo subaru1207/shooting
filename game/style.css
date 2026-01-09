@@ -9,8 +9,8 @@ body {
 }
 
 #gameCanvas {
-  background: #e0dbdb00;
-  border: 2px solid #ff000d;
+  background: #ffffff;
+  border: 2px solid #ffffff;
   box-shadow: 0 4px 24px rgba(8, 252, 0, 0.007);
   display: block;
 }
